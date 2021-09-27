@@ -15,29 +15,23 @@ class App extends React.Component {
 
   getLocFun = async (e) => {
     e.preventDefault();
-    console.log('inside getLocFun')
 
     // let cityName = e.target.city.value;
     await this.setState({
       searchQuery: e.target.city.value
     })
 
-    console.log('key', process.env.REACT_APP_LOCATIONIQ_KEY);
 
     try {
       let reqUrl = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATIONIQ_KEY}&q=${this.state.searchQuery}&format=json`;
 
       let locResult = await axios.get(reqUrl);
-      console.log('aaaaaaaaaaa', locResult);
-      console.log('bbbbbbbb', locResult.data);
-      console.log('cccccccc', locResult.data[0]);
       this.setState({
         locationResult: locResult.data[0],
         showLocInfo: true,
         showError:false
       })
     } catch {
-      console.log('something went wrong')
       this.setState({
         showError: true,
         showLocInfo:false
